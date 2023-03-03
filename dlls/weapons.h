@@ -107,7 +107,7 @@ public:
 //#define CROWBAR_MAX_CLIP		WEAPON_NOCLIP
 #define GLOCK_MAX_CLIP 17
 #define PYTHON_MAX_CLIP 6
-#define MP5_MAX_CLIP 50
+#define MP5_MAX_CLIP 30
 #define MP5_DEFAULT_AMMO 25
 #define SHOTGUN_MAX_CLIP 8
 #define CROSSBOW_MAX_CLIP 5
@@ -1219,4 +1219,286 @@ public:
 
 private:
 	unsigned short m_usSnarkFire;
+};
+
+// Enumeration of Peppino Shotgun animations in the view model file (v_pepshot.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum pepshot_e
+{
+	PEP_IDLE,
+	PEP_RELOAD,
+	PEP_DRAW,
+	PEP_SHOOT1,
+	PEP_SHOOT2,
+	PEP_SHOOT3,
+};
+
+// Main weapon class
+class CPeppinoShotgun : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+
+
+	int m_iShell;
+};
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum m40_e
+{
+	M40_IDLE,
+	M40_RELOAD,
+	M40_DRAW,
+	M40_SHOOT1,
+	M40_SHOOT2,
+	M40_SHOOT3,
+};
+
+// Main weapon class
+class CM40 : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum fs_e
+{
+	FS_IDLE,
+	FS_RELOAD,
+	FS_DRAW,
+	FS_SHOOT1,
+	FS_SHOOT2,
+	FS_SHOOT3,
+};
+
+// Main weapon class
+class CFS : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum m249_e
+{
+	M249_IDLE,
+	M249_RELOAD,
+	M249_DRAW,
+	M249_SHOOT1,
+	M249_SHOOT2,
+	M249_SHOOT3,
+};
+
+// Main weapon class
+class CM249 : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum fg_e
+{
+	FG_IDLE,
+	FG_DRAW,
+};
+
+// Main weapon class
+class CFG : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum quad_e
+{
+	QUAD_IDLE,
+	QUAD_RELOAD,
+	QUAD_DRAW,
+	QUAD_SHOOT1,
+	QUAD_SHOOT2,
+	QUAD_SHOOT3,
+};
+
+class CQuad : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum camera_e
+{
+	CAM_IDLE,
+	CAM_SHOOT1,
+	CAM_DRAW,
+	
+};
+
+// Main weapon class
+class CCamera : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	
+};
+
+// anim order
+enum m1_e
+{
+	M1_IDLE,
+	M1_RELOAD,
+	M1_DRAW,
+	M1_SHOOT1,
+	M1_SHOOT2,
+	M1_SHOOT3,
+};
+
+class CM1 : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
 };

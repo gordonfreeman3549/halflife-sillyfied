@@ -322,6 +322,31 @@ void W_Precache()
 	// hornetgun
 	UTIL_PrecacheOtherWeapon("weapon_hornetgun");
 
+	// Peppino's Shotgun
+	UTIL_PrecacheOtherWeapon("weapon_pepshotgun");
+
+	// M40A1 rifle
+	UTIL_PrecacheOtherWeapon("weapon_m40");
+
+	// Five-seveN
+	UTIL_PrecacheOtherWeapon("weapon_fs");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_m249");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_fg");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_quad");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_camera");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_m1");
+
+
 	if (g_pGameRules->IsDeathmatch())
 	{
 		UTIL_PrecacheOther("weaponbox"); // container for dropped deathmatch weapons

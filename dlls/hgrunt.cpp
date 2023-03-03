@@ -285,10 +285,12 @@ void CHGrunt::GibMonster()
 		if (FBitSet(pev->weapons, HGRUNT_SHOTGUN))
 		{
 			pGun = DropItem("weapon_shotgun", vecGunPos, vecGunAngles);
+			pGun = DropItem("weapon_m1", vecGunPos, vecGunAngles);
 		}
 		else
 		{
 			pGun = DropItem("weapon_9mmAR", vecGunPos, vecGunAngles);
+			pGun = DropItem("weapon_fs", vecGunPos, vecGunAngles);
 		}
 		if (pGun)
 		{

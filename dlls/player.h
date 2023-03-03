@@ -388,6 +388,7 @@ inline void CBasePlayer::SetHasSuit(bool hasSuit)
 #define AUTOAIM_5DEGREES 0.08715574274766
 #define AUTOAIM_8DEGREES 0.1391731009601
 #define AUTOAIM_10DEGREES 0.1736481776669
+#define AUTOAIM_CAMERA 0.69696969
 
 inline bool gInitHUD = true;
 inline bool gEvilImpulse101 = false;
