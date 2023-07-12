@@ -15,7 +15,7 @@ void CM40::Spawn()
 	Precache();
 	SET_MODEL(ENT(pev), "models/w_m40.mdl");
 	m_iId = WEAPON_M40;
-	m_iDefaultAmmo = 5; // How much ammo this weapon has on spawn
+	m_iDefaultAmmo = 30; // How much ammo this weapon has on spawn
 	FallInit();			 // get ready to fall down.
 }
 
@@ -33,13 +33,13 @@ void CM40::Precache()
 bool CM40::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "762"; // Which ammo type this weapon use
-	p->iMaxAmmo1 = 40;	 // What's the max ammo quantity for that kind of ammo
+	p->pszAmmo1 = "3006"; // Which ammo type this weapon use
+	p->iMaxAmmo1 = 30;	 // What's the max ammo quantity for that kind of ammo
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = NULL;
-	p->iMaxClip = 5; // How many ammo this weapon's clip or magazine has
-	p->iSlot = 2;	  // Which "slot" (column) in the HUD this weapon is located (2 = same slot as HL1 MP5, shotgun, crossbow)
-	p->iPosition = 3; // Which "position" (row) in the HUD this weapon is located (3 = after HL1 crossbow)
+	p->iMaxClip = 10; // How many ammo this weapon's clip or magazine has
+	p->iSlot = 5;	  // Which "slot" (column) in the HUD this weapon is located (2 = same slot as HL1 MP5, shotgun, crossbow)
+	p->iPosition = 2; // Which "position" (row) in the HUD this weapon is located (3 = after HL1 crossbow)
 	p->iFlags = 0;	  // Special flags this weapon has
 	p->iId = m_iId = WEAPON_M40;
 	p->iWeight = MP5_WEIGHT; // How much "priority" this weapon has when auto-switch is triggered
@@ -82,7 +82,7 @@ void CM40::PrimaryAttack()
 	Vector vecSrc = m_pPlayer->GetGunPosition();
 	Vector vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
 	Vector vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, VECTOR_CONE_1DEGREES, 8192, BULLET_PLAYER_MP5,
-		1, 55, m_pPlayer->pev, m_pPlayer->random_seed);
+		1, 125, m_pPlayer->pev, m_pPlayer->random_seed);
 
 	// Play view model animation and firing sound
 	SendWeaponAnim(M40_SHOOT1 + RANDOM_LONG(0, 2));
@@ -96,18 +96,18 @@ void CM40::PrimaryAttack()
 		vecShellVelocity, pev->angles.y, m_iShell, TE_BOUNCE_SHELL);
 
 	// Punch the camera to simulate recoil
-	m_pPlayer->pev->punchangle.x -= 2;
+	m_pPlayer->pev->punchangle.x -= 6.8;
 	// Remove a bullet
 	m_iClip--;
 	// Next time for attack and weapon idling
-	m_flNextPrimaryAttack = 1.74;
+	m_flNextPrimaryAttack = 1.25;
 	m_flTimeWeaponIdle = 2;
 }
 
 void CM40::Reload()
 {
 	// Reload 30 bullets, play the AK47_RELOAD animation, reload duration is 2.5 seconds
-	DefaultReload(5, M40_RELOAD, 5.3);
+	DefaultReload(10, M40_RELOAD, 3.5);
 }
 
 

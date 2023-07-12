@@ -1,3 +1,11 @@
+// HALF-LIFE: SILLYFIED
+// FN Five-Seven
+// Stats			[cal 5.7]	[dmg 9] [mag 20] [max 150] [acc 3] [rpm 480] [recoil 1.4 +1] 
+// Unbalanced Stats [cal 5.56]	[dmg 9] [mag 20] [max 180] [acc 5] [rpm 420] [recoil 1.4]
+// Changes----------------------------------------------------------------
+// ammo 5.56 > 5.7, max 180 > 150, acc 5 > 3, rpm 0.15 > 0.125 (03/06/23)
+
+
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
@@ -15,8 +23,9 @@ void CFS::Spawn()
 	Precache();
 	SET_MODEL(ENT(pev), "models/w_57.mdl");
 	m_iId = WEAPON_FS;
-	m_iDefaultAmmo = 20; // How much ammo this weapon has on spawn
+	m_iDefaultAmmo = 60; // How much ammo this weapon has on spawn
 	FallInit();			// get ready to fall down.
+	
 }
 
 void CFS::Precache()
@@ -33,8 +42,8 @@ void CFS::Precache()
 bool CFS::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "556"; // Which ammo type this weapon use
-	p->iMaxAmmo1 = 180;	 // What's the max ammo quantity for that kind of ammo
+	p->pszAmmo1 = "57"; // 5.56 > 5.7
+	p->iMaxAmmo1 = 150;	 //180 > 150
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = NULL;
 	p->iMaxClip = 20;  // How many ammo this weapon's clip or magazine has
@@ -51,6 +60,7 @@ bool CFS::Deploy()
 {
 	//  The last parameter is the animation set for the player model in thirdperson to use
 	return DefaultDeploy("models/v_57.mdl", "models/p_57.mdl", FS_DRAW, "mp5");
+	
 }
 
 void CFS::PrimaryAttack()
@@ -81,7 +91,7 @@ void CFS::PrimaryAttack()
 
 	Vector vecSrc = m_pPlayer->GetGunPosition();
 	Vector vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
-	Vector vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, VECTOR_CONE_5DEGREES, 8192, BULLET_PLAYER_MP5,
+	Vector vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, VECTOR_CONE_3DEGREES, 8192, BULLET_PLAYER_MP5,
 		1, 9, m_pPlayer->pev, m_pPlayer->random_seed);
 
 	// Play view model animation and firing sound
@@ -96,11 +106,11 @@ void CFS::PrimaryAttack()
 		vecShellVelocity, pev->angles.y, m_iShell, TE_BOUNCE_SHELL);
 
 	// Punch the camera to simulate recoil
-	m_pPlayer->pev->punchangle.x -= 2;
+	m_pPlayer->pev->punchangle.x -= 1.4;
 	// Remove a bullet
 	m_iClip--;
 	// Next time for attack and weapon idling
-	m_flNextPrimaryAttack = 0.15;
+	m_flNextPrimaryAttack = 0.125;
 	m_flTimeWeaponIdle = 2;
 }
 

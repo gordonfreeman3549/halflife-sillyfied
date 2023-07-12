@@ -86,7 +86,7 @@ bool CGauss::GetItemInfo(ItemInfo* p)
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 3;
+	p->iSlot = 6;
 	p->iPosition = 1;
 	p->iId = m_iId = WEAPON_GAUSS;
 	p->iFlags = 0;
@@ -199,25 +199,22 @@ void CGauss::SecondaryAttack()
 	}
 	else
 	{
-		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] > 0)
+		// during the charging process, eat one bit of ammo every once in a while
+		if (UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000)
 		{
-			// during the charging process, eat one bit of ammo every once in a while
-			if (UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000)
-			{
 #ifdef CLIENT_DLL
-				if (bIsMultiplayer())
+			if (bIsMultiplayer())
 #else
-				if (g_pGameRules->IsMultiplayer())
+			if (g_pGameRules->IsMultiplayer())
 #endif
-				{
-					m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
-					m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
-				}
-				else
-				{
-					m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
-					m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.3;
-				}
+			{
+				m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
+				m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
+			}
+			else
+			{
+				m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
+				m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.3;
 			}
 		}
 

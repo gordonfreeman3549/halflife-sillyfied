@@ -33,7 +33,7 @@
 
 #define NOT_USED 255
 
-#define TRACER_FREQ 4 // Tracers fire every fourth bullet
+#define TRACER_FREQ 1 // Tracers fire every fourth bullet
 
 
 //=========================================================
@@ -192,7 +192,7 @@ void EjectBrass(const Vector& vecOrigin, const Vector& vecVelocity, float rotati
 	WRITE_ANGLE(rotation);
 	WRITE_SHORT(model);
 	WRITE_BYTE(soundtype);
-	WRITE_BYTE(25); // 2.5 seconds
+	WRITE_BYTE(2550); // 2.5 seconds
 	MESSAGE_END();
 }
 
@@ -346,6 +346,31 @@ void W_Precache()
 	// M249
 	UTIL_PrecacheOtherWeapon("weapon_m1");
 
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_deagle");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_usp");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_ksg");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_agun");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_cdeagle");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_ak47");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_knife");
+
+	// M249
+	UTIL_PrecacheOtherWeapon("weapon_famas");
+
+	
 
 	if (g_pGameRules->IsDeathmatch())
 	{
@@ -505,7 +530,7 @@ void CBasePlayerItem::AttemptToMaterialize()
 		return;
 	}
 
-	pev->nextthink = time;
+	pev->nextthink = gpGlobals->time + time;
 }
 
 //=========================================================
@@ -629,7 +654,6 @@ void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer)
 	pev->owner = pPlayer->edict();
 	pev->nextthink = gpGlobals->time + .1;
 	SetTouch(NULL);
-	SetThink(NULL); // Clear FallThink function so it can't run while attached to player.
 }
 
 // CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is pOriginal
@@ -743,7 +767,7 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 	MESSAGE_END();
 }
 
-bool CBasePlayerWeapon::AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, char* szName, int iMaxClip, int iMaxCarry)
+bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry)
 {
 	int iIdAmmo;
 
@@ -769,7 +793,7 @@ bool CBasePlayerWeapon::AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, ch
 	if (iIdAmmo > 0)
 	{
 		m_iPrimaryAmmoType = iIdAmmo;
-		if (this != origin)
+		if (m_pPlayer->HasPlayerItem(this))
 		{
 			// play the "got ammo" sound only if we gave some ammo to a player that already had this gun.
 			// if the player is just getting this gun for the first time, DefaultTouch will play the "picked up gun" sound for us.
@@ -970,7 +994,7 @@ bool CBasePlayerWeapon::ExtractAmmo(CBasePlayerWeapon* pWeapon)
 	{
 		// blindly call with m_iDefaultAmmo. It's either going to be a value or zero. If it is zero,
 		// we only get the ammo in the weapon's clip, which is what we want.
-		iReturn = pWeapon->AddPrimaryAmmo(this, m_iDefaultAmmo, (char*)pszAmmo1(), iMaxClip(), iMaxAmmo1());
+		iReturn = pWeapon->AddPrimaryAmmo(m_iDefaultAmmo, (char*)pszAmmo1(), iMaxClip(), iMaxAmmo1());
 		m_iDefaultAmmo = 0;
 	}
 

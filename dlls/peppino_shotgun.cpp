@@ -38,8 +38,8 @@ bool CPeppinoShotgun::GetItemInfo(ItemInfo* p)
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = NULL;
 	p->iMaxClip = 3;  // How many ammo this weapon's clip or magazine has
-	p->iSlot = 3;	  // Which "slot" (column) in the HUD this weapon is located (2 = same slot as HL1 MP5, shotgun, crossbow)
-	p->iPosition = 5; // Which "position" (row) in the HUD this weapon is located (3 = after HL1 crossbow)
+	p->iSlot = 4;	  // Which "slot" (column) in the HUD this weapon is located (2 = same slot as HL1 MP5, shotgun, crossbow)
+	p->iPosition = 2; // Which "position" (row) in the HUD this weapon is located (3 = after HL1 crossbow)
 	p->iFlags = 0;	  // Special flags this weapon has
 	p->iId = m_iId = WEAPON_PEPSHOTGUN;
 	p->iWeight = MP5_WEIGHT; // How much "priority" this weapon has when auto-switch is triggered

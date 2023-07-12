@@ -15,6 +15,11 @@
 
 #pragma once
 
+#define ITEM_SLOT6 6
+#define ITEM_SLOT7 7
+#define ITEM_SLOT8 8
+
+
 class CItem : public CBaseEntity
 {
 public:

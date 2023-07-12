@@ -67,7 +67,9 @@ public:
 #define ITEM_SECURITY 3
 #define ITEM_BATTERY 4
 
-#define MAX_NORMAL_BATTERY 100
+
+
+#define MAX_NORMAL_BATTERY 200
 
 
 // weapon weight factors (for auto-switching)   (-1 = noswitch)
@@ -87,19 +89,21 @@ public:
 #define TRIPMINE_WEIGHT -10
 
 
+
 // weapon clip/carry ammo capacities
-#define URANIUM_MAX_CARRY 100
-#define _9MM_MAX_CARRY 250
-#define _357_MAX_CARRY 36
-#define BUCKSHOT_MAX_CARRY 125
-#define BOLT_MAX_CARRY 50
+#define URANIUM_MAX_CARRY 250
+#define _9MM_MAX_CARRY 90
+#define _357_MAX_CARRY 27
+#define BUCKSHOT_MAX_CARRY 24
+#define BOLT_MAX_CARRY 10
 #define ROCKET_MAX_CARRY 5
 #define HANDGRENADE_MAX_CARRY 10
 #define SATCHEL_MAX_CARRY 5
 #define TRIPMINE_MAX_CARRY 5
 #define SNARK_MAX_CARRY 15
-#define HORNET_MAX_CARRY 8
-#define M203_GRENADE_MAX_CARRY 10
+#define HORNET_MAX_CARRY 64
+#define M203_GRENADE_MAX_CARRY 5
+
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP -1
@@ -121,11 +125,12 @@ public:
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
 
 
+
 // the default amount of ammo that comes with each gun when it spawns
 #define GLOCK_DEFAULT_GIVE 17
 #define PYTHON_DEFAULT_GIVE 6
-#define MP5_DEFAULT_GIVE 25
-#define MP5_DEFAULT_AMMO 25
+#define MP5_DEFAULT_GIVE 7
+#define MP5_DEFAULT_AMMO 7
 #define MP5_M203_DEFAULT_GIVE 0
 #define SHOTGUN_DEFAULT_GIVE 12
 #define CROSSBOW_DEFAULT_GIVE 5
@@ -137,6 +142,7 @@ public:
 #define TRIPMINE_DEFAULT_GIVE 1
 #define SNARK_DEFAULT_GIVE 5
 #define HIVEHAND_DEFAULT_GIVE 8
+
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -303,7 +309,7 @@ public:
 	virtual bool ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return true; }			// Return true if you can add ammo to yourself when picked up
 
 	// generic "shared" ammo handlers
-	bool AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, char* szName, int iMaxClip, int iMaxCarry);
+	bool AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
 	bool AddSecondaryAmmo(int iCount, char* szName, int iMaxCarry);
 
 	void UpdateItemInfo() override {} // updates HUD state
@@ -798,8 +804,6 @@ public:
 
 	void UpdateSpot();
 	bool ShouldWeaponIdle() override { return true; }
-
-	bool IsUseable() override;
 
 	CLaserSpot* m_pSpot;
 	bool m_fSpotActive;
@@ -1354,6 +1358,7 @@ class CM249 : public CBasePlayerWeapon
 	int iItemSlot() override { return 2; }
 	bool GetItemInfo(ItemInfo* p) override;
 	void PrimaryAttack() override;
+	void SecondaryAttack() override;
 	void Reload() override;
 	bool Deploy() override;
 	void WeaponIdle() override;
@@ -1483,6 +1488,276 @@ enum m1_e
 };
 
 class CM1 : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum deagle_e
+{
+	DEAGLE_IDLE,
+	DEAGLE_RELOAD,
+	DEAGLE_DRAW,
+	DEAGLE_SHOOT1,
+	DEAGLE_SHOOT2,
+	DEAGLE_SHOOT3,
+};
+
+class CDeagle : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum usp_e
+{
+	USP_IDLE,
+	USP_RELOAD,
+	USP_DRAW,
+	USP_SHOOT1,
+	USP_SHOOT2,
+	USP_SHOOT3,
+};
+
+class CUsp : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum ksg_e
+{
+	KSG_IDLE,
+	KSG_RELOAD,
+	KSG_DRAW,
+	KSG_SHOOT1,
+	KSG_SHOOT2,
+	KSG_SHOOT3,
+};
+
+class CKsg : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum agun_e
+{
+	AGUN_IDLE,
+	AGUN_RELOAD,
+	AGUN_DRAW,
+	AGUN_SHOOT1,
+};
+
+class CAgun : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// anim order
+enum cdeagle_e
+{
+	CDEAGLE_IDLE,
+	CDEAGLE_RELOAD,
+	CDEAGLE_DRAW,
+	CDEAGLE_SHOOT1,
+	CDEAGLE_SHOOT2,
+	CDEAGLE_SHOOT3,
+};
+
+class CCDeagle : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// Enumeration of AK-47 animations in the view model file (v_ak47.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum ak47_e
+{
+	AK47_IDLE,
+	AK47_RELOAD,
+	AK47_DRAW,
+	AK47_SHOOT1,
+	AK47_SHOOT2,
+	AK47_SHOOT3,
+};
+
+// Main weapon class
+class CAK47 : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	int m_iShell;
+};
+
+// Enumeration of M40 animations in the view model file (v_m40.mdl)
+// Must match the same order as the model itself (look through a model viewer)
+enum knife_e
+{
+	KNIFE_IDLE,
+	KNIFE_SHOOT1,
+	KNIFE_DRAW,
+
+};
+
+// Main weapon class
+class CKnife : public CBasePlayerWeapon
+{
+	void Spawn() override;
+	void Precache() override;
+	// Which "slot" (column) in the HUD this weapon is located
+	int iItemSlot() override { return 2; }
+	bool GetItemInfo(ItemInfo* p) override;
+	void PrimaryAttack() override;
+	void Reload() override;
+	bool Deploy() override;
+	void WeaponIdle() override;
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+};
+
+// anim order
+enum famas_e
+{
+	FAMAS_IDLE,
+	FAMAS_RELOAD,
+	FAMAS_DRAW,
+	FAMAS_SHOOT1,
+	FAMAS_SHOOT2,
+	FAMAS_SHOOT3,
+};
+
+class CFamas : public CBasePlayerWeapon
 {
 	void Spawn() override;
 	void Precache() override;

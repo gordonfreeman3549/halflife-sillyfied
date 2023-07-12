@@ -3446,6 +3446,20 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 
 	switch (iImpulse)
 	{
+	case 42:
+		gEvilImpulse101 = true;
+		GiveNamedItem("item_suit");
+		GiveNamedItem("item_battery");
+		GiveNamedItem("weapon_knife");
+		GiveNamedItem("weapon_usp");
+		GiveNamedItem("weapon_quad");
+		GiveNamedItem("weapon_357");
+		GiveNamedItem("weapon_satchel");
+		
+
+		gEvilImpulse101 = false;
+		break;
+
 	case 76:
 	{
 		if (!giPrecacheGrunt)
@@ -3845,10 +3859,6 @@ void CBasePlayer::ItemPostFrame()
 	}
 
 	ImpulseCommands();
-
-	// check again if the player is using a tank if they started using it in PlayerUse
-	if (m_pTank != NULL)
-		return;
 
 	if (!m_pActiveItem)
 		return;
