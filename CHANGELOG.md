@@ -7,6 +7,29 @@
 ### Bug fixes
 
 * Fixed tripmines not detonating if placed on breakable and a save game is loaded [#192](https://github.com/SamVanheer/halflife-updated/issues/192) (Thanks forklift.mdl)
+* Fixed func_friction not working properly in multiplayer (halflife issue [#1542](https://github.com/ValveSoftware/halflife/issues/1542)) (Thanks L453rh4wk)
+* Fixed spray logo using wrong decal after save game load when not using custom spray [#193](https://github.com/SamVanheer/halflife-updated/issues/193) (Thanks Ronin4862)
+* Fixed ammo pickup sound playing when picking up a weapon for the first time (bug introduced by [#153](https://github.com/SamVanheer/halflife-updated/issues/153) in Beta 12)
+* Fixed Gauss gun sometimes settting player uranium ammo to -1 (halflife issue [#3343](https://github.com/ValveSoftware/halflife/issues/3343))
+* Fixed pistol not playing empty sound when using secondary attack
+* Fixed user interface coordinates and sizes being incorrectly adjusted for resolution (halflife issue [#3344](https://github.com/ValveSoftware/halflife/issues/3344))
+* Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
+* Fixed alien slave beams staying forever if they exist during a level change (halflife issue [#3104](https://github.com/ValveSoftware/halflife/issues/3104))
+* Fixed cycler_wreckage storing time value in int instead of float
+* Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
+* Fixed shotgun starting idle animations too quickly after exhausting all ammo using primary attack [#195](https://github.com/SamVanheer/halflife-updated/issues/195) (Thanks Ronin4862)
+* Fixed RPG not playing empty sound when attempting to fire with no ammo left [#196](https://github.com/SamVanheer/halflife-updated/issues/196) (Thanks Ronin4862)
+* Fixed Human Grunts dropping weapons again if the game is saved and loaded while the grunt is dying (Thanks Oxofemple.)
+* Added missing monster state name to ReportAIState (halflife issue [#3220](https://github.com/ValveSoftware/halflife/issues/3220)) (Thanks Shepard)
+* Fixed mouse movement during map load affecting initial view angles
+* Fixed being able to break scripted_sequence by +using friendly NPCs to make them follow player [#200](https://github.com/SamVanheer/halflife-updated/issues/200) (Thanks Oxofemple. for reporting this and FreeSlave for finding the solution)
+* Fixed potential incorrect facing in scripted sequence (Thanks FreeSlave)
+* Made the Linux version link statically to the C++ runtime to help avoid problems when running mods on older systems (Thanks a1ba and FreeSlave)
+* Fixed Egon not stopping its attack animation if the attack button is held down and ammo runs out (Thanks the man)
+* Fixed scientists crashing when speaking fear dialogue when enemy has been removed
+* Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
+* Disabled jump sounds while player is frozen (e.g. trigger_camera, trigger_playerfreeze)
+* Fixed node graph code incorrectly flagging node graphs as out of date if an outdated graph exists in a search path other than the mod directory (e.g. a graph in `halflife_updated_addon/map/graphs`)
 
 ## Changes in V1.0.0 Beta 014
 
