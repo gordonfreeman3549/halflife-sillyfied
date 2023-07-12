@@ -64,7 +64,22 @@ CHandGrenade g_HandGren;
 CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
-
+CPeppinoShotgun g_PeppinoShotgun;
+CM40 g_M40;
+CFS g_FS;
+CM249 g_M249;
+CFG g_FG;
+CQuad g_Quad;
+CCamera g_Camera;
+CM1 g_M1;
+CDeagle g_Deagle;
+CUsp g_Usp;
+CKsg g_KSG;
+CAgun g_Agun;
+CCDeagle g_CDeagle;
+CAK47 g_AK47;
+CKnife g_Knife;
+CFamas g_Famas;
 
 /*
 ======================
@@ -464,6 +479,22 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_Satchel, &player);
 	HUD_PrepEntity(&g_Tripmine, &player);
 	HUD_PrepEntity(&g_Snark, &player);
+	HUD_PrepEntity(&g_PeppinoShotgun, &player);
+	HUD_PrepEntity(&g_M40, &player);
+	HUD_PrepEntity(&g_FS, &player);
+	HUD_PrepEntity(&g_M249, &player);
+	HUD_PrepEntity(&g_FG, &player);
+	HUD_PrepEntity(&g_Quad, &player);
+	HUD_PrepEntity(&g_Camera, &player);
+	HUD_PrepEntity(&g_M1, &player);
+	HUD_PrepEntity(&g_Deagle, &player);
+	HUD_PrepEntity(&g_Usp, &player);
+	HUD_PrepEntity(&g_KSG, &player);
+	HUD_PrepEntity(&g_Agun, &player);
+	HUD_PrepEntity(&g_CDeagle, &player);
+	HUD_PrepEntity(&g_AK47, &player);
+	HUD_PrepEntity(&g_Knife, &player);
+	HUD_PrepEntity(&g_Famas, &player);
 }
 
 /*
@@ -586,7 +617,74 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	case WEAPON_SNARK:
 		pWeapon = &g_Snark;
 		break;
+
+	case WEAPON_PEPSHOTGUN:
+		pWeapon = &g_PeppinoShotgun;
+		break;
+
+	case WEAPON_M40:
+		pWeapon = &g_M40;
+		break;
+
+	case WEAPON_FS:
+		pWeapon = &g_FS;
+		break;
+
+	case WEAPON_M249:
+		pWeapon = &g_M249;
+		break;
+
+	case WEAPON_FG:
+		pWeapon = &g_FG;
+		break;
+
+	case WEAPON_QUAD:
+		pWeapon = &g_Quad;
+		break;
+
+	case WEAPON_CAMERA:
+		pWeapon = &g_Camera;
+		break;
+
+	case WEAPON_M1:
+		pWeapon = &g_M1;
+		break;
+
+	case WEAPON_DEAGLE:
+		pWeapon = &g_Deagle;
+		break;
+
+	case WEAPON_USP:
+		pWeapon = &g_Usp;
+		break;
+
+	case WEAPON_KSG:
+		pWeapon = &g_KSG;
+		break;
+
+	case WEAPON_AGUN:
+		pWeapon = &g_Agun;
+		break;
+
+	case WEAPON_CDEAGLE:
+		pWeapon = &g_CDeagle;
+		break;
+
+	case WEAPON_AK47:
+		pWeapon = &g_AK47;
+		break;
+
+	case WEAPON_KNIFE:
+		pWeapon = &g_Knife;
+		break;
+
+	case WEAPON_FAMAS:
+		pWeapon = &g_Famas;
+		break;
+	
+	
 	}
+	
 
 	// Store pointer to our destination entity_state_t so we can get our origin, etc. from it
 	//  for setting up events on the client

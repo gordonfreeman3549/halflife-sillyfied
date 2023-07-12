@@ -458,7 +458,7 @@ void EV_FireGlock1(event_args_t* args)
 		V_PunchAxis(0, -2.0);
 	}
 
-	EV_GetDefaultShellInfo(args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 20, -12, 4);
+	EV_GetDefaultShellInfo(args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 13, -3, 4); //forward is forward, right is up, up is right..... thanks valve...
 
 	EV_EjectBrass(ShellOrigin, ShellVelocity, angles[YAW], shell, TE_BOUNCE_SHELL);
 
@@ -743,7 +743,7 @@ void EV_FirePython(event_args_t* args)
 		EV_MuzzleFlash();
 		gEngfuncs.pEventAPI->EV_WeaponAnimation(PYTHON_FIRE1, multiplayer ? 1 : 0);
 
-		V_PunchAxis(0, -10.0);
+		V_PunchAxis(0, -2.6);
 	}
 
 	switch (gEngfuncs.pfnRandomLong(0, 1))

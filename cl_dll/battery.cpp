@@ -83,7 +83,7 @@ bool CHudBattery::Draw(float flTime)
 
 	rc.top += m_iHeight * ((float)(100 - (V_min(100, m_iBat))) * 0.01); // battery can go from 0 to 100 so * 0.01 goes from 0 to 1
 
-	UnpackRGB(r, g, b, RGB_YELLOWISH);
+	UnpackRGB(r, g, b, RGB_WHITE);
 
 	if (!gHUD.HasSuit())
 		return true;
@@ -110,10 +110,10 @@ bool CHudBattery::Draw(float flTime)
 
 	ScaleColors(r, g, b, a);
 
-	int iOffset = (m_prc1->bottom - m_prc1->top) / 6;
+	int iOffset = (m_prc1->bottom - m_prc1->top) / 9;//:6
 
-	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
-	x = ScreenWidth / 4;
+	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight * 21.8; // :2
+	x = ScreenWidth /2.5;//:4
 
 	// make sure we have the right sprite handles
 	if (0 == m_hSprite1)

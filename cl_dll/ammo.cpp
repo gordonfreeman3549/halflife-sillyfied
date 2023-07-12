@@ -863,12 +863,12 @@ bool CHudAmmo::Draw(float flTime)
 	if (m_fFade > 0)
 		m_fFade -= (gHUD.m_flTimeDelta * 20);
 
-	UnpackRGB(r, g, b, RGB_YELLOWISH);
+	UnpackRGB(r, g, b, RGB_WHITE);
 
 	ScaleColors(r, g, b, a);
 
 	// Does this weapon have a clip?
-	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
+	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight * 21.8; // :2 y 
 
 	// Does weapon have any ammo at all?
 	if (m_pWeapon->iAmmoType > 0)
@@ -879,25 +879,25 @@ bool CHudAmmo::Draw(float flTime)
 		{
 			// room for the number and the '|' and the current ammo
 
-			x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
+			x = ScreenWidth - (46 * AmmoWidth) - iIconWidth;//this? was 8 this is it luigi, when there is smoke, they pinch back
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
 			Rect rc;
 			rc.top = 0;
-			rc.left = 0;
+			rc.left = 0;//0
 			rc.right = AmmoWidth;
 			rc.bottom = 100;
 
-			int iBarWidth = AmmoWidth / 10;
+			int iBarWidth = AmmoWidth /10; //this might be it??? was :10 this is for the bar
 
-			x += AmmoWidth / 2;
+			x += AmmoWidth /2; // this? was :2 ok so this is for ummm remaining ammo
 
-			UnpackRGB(r, g, b, RGB_YELLOWISH);
+			UnpackRGB(r, g, b, RGB_WHITE);
 
 			// draw the | bar
 			FillRGBA(x, y, iBarWidth, gHUD.m_iFontHeight, r, g, b, a);
 
-			x += iBarWidth + AmmoWidth / 2;
+			x += iBarWidth + AmmoWidth /2;//this??? this is ummmidk it was :2 tho yep this is it luigi oops nvm :(
 
 			// GL Seems to need this
 			ScaleColors(r, g, b, a);
@@ -906,7 +906,7 @@ bool CHudAmmo::Draw(float flTime)
 		else
 		{
 			// SPR_Draw a bullets only line
-			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
+			x = ScreenWidth - 45 * AmmoWidth - iIconWidth; //this might be umm idk it was 4 tjo
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
 		}
 
@@ -924,8 +924,8 @@ bool CHudAmmo::Draw(float flTime)
 		// Do we have secondary ammo?
 		if ((pw->iAmmo2Type != 0) && (gWR.CountAmmo(pw->iAmmo2Type) > 0))
 		{
-			y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight / 4;
-			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
+			y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight / 48;// was :4 i hope this is the umm secondary had
+			x = ScreenWidth - 42 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmo2Type), r, g, b);
 
 			// Draw the ammo Icon

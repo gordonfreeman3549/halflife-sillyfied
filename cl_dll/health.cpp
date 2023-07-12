@@ -54,7 +54,7 @@ bool CHudHealth::Init()
 {
 	HOOK_MESSAGE(Health);
 	HOOK_MESSAGE(Damage);
-	m_iHealth = 100;
+	m_iHealth = 125;//health maybe???
 	m_fFade = 0;
 	m_iFlags = 0;
 	m_bitsDamage = 0;
@@ -154,11 +154,11 @@ void CHudHealth::GetPainColor(int& r, int& g, int& b)
 #else
 	if (m_iHealth > 25)
 	{
-		UnpackRGB(r, g, b, RGB_YELLOWISH);
+		UnpackRGB(r, g, b, RGB_WHITE);
 	}
 	else
 	{
-		r = 250;
+		r = 255;
 		g = 0;
 		b = 0;
 	}
@@ -207,13 +207,13 @@ bool CHudHealth::Draw(float flTime)
 		HealthWidth = gHUD.GetSpriteRect(gHUD.m_HUD_number_0).right - gHUD.GetSpriteRect(gHUD.m_HUD_number_0).left;
 		int CrossWidth = gHUD.GetSpriteRect(m_HUD_cross).right - gHUD.GetSpriteRect(m_HUD_cross).left;
 
-		y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
-		x = CrossWidth / 2;
+		y = CrossWidth * 16.6 ; // divided by 2, this might be hud health location??? ok that actually works time to experiment (have to force the user to run the game on 1080p)
+		//og code ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight * 14 but change 14 to 2
+		x = CrossWidth /2;
 
-		SPR_Set(gHUD.GetSprite(m_HUD_cross), r, g, b);
-		SPR_DrawAdditive(0, x, y, &gHUD.GetSpriteRect(m_HUD_cross));
+	
 
-		x = CrossWidth + HealthWidth / 2;
+		x = CrossWidth + HealthWidth * 42.;
 
 		//Reserve space for 3 digits by default, but allow it to expand
 		x += gHUD.GetHudNumberWidth(m_iHealth, 3, DHN_DRAWZERO);
@@ -227,7 +227,7 @@ bool CHudHealth::Draw(float flTime)
 		int iHeight = gHUD.m_iFontHeight;
 		int iWidth = HealthWidth / 10;
 		UnpackRGB(r, g, b, RGB_YELLOWISH);
-		FillRGBA(x, y, iWidth, iHeight, r, g, b, a);
+		
 	}
 
 	DrawDamage(flTime);
