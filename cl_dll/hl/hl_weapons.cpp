@@ -64,14 +64,7 @@ CHandGrenade g_HandGren;
 CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
-CPeppinoShotgun g_PeppinoShotgun;
-CM40 g_M40;
-CFS g_FS;
-CM249 g_M249;
-CFG g_FG;
-CQuad g_Quad;
-CCamera g_Camera;
-CM1 g_M1;
+
 
 /*
 ======================
@@ -471,14 +464,6 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_Satchel, &player);
 	HUD_PrepEntity(&g_Tripmine, &player);
 	HUD_PrepEntity(&g_Snark, &player);
-	HUD_PrepEntity(&g_PeppinoShotgun, &player);
-	HUD_PrepEntity(&g_M40, &player);
-	HUD_PrepEntity(&g_FS, &player);
-	HUD_PrepEntity(&g_M249, &player);
-	HUD_PrepEntity(&g_FG, &player);
-	HUD_PrepEntity(&g_Quad, &player);
-	HUD_PrepEntity(&g_Camera, &player);
-	HUD_PrepEntity(&g_M1, &player);
 }
 
 /*
@@ -601,40 +586,7 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	case WEAPON_SNARK:
 		pWeapon = &g_Snark;
 		break;
-
-	case WEAPON_PEPSHOTGUN:
-		pWeapon = &g_PeppinoShotgun;
-		break;
-
-	case WEAPON_M40:
-		pWeapon = &g_M40;
-		break;
-
-	case WEAPON_FS:
-		pWeapon = &g_FS;
-		break;
-
-	case WEAPON_M249:
-		pWeapon = &g_M249;
-		break;
-
-	case WEAPON_FG:
-		pWeapon = &g_FG;
-		break;
-
-	case WEAPON_QUAD:
-		pWeapon = &g_Quad;
-		break;
-
-	case WEAPON_CAMERA:
-		pWeapon = &g_Camera;
-		break;
-
-	case WEAPON_M1:
-		pWeapon = &g_M1;
-		break;
 	}
-	
 
 	// Store pointer to our destination entity_state_t so we can get our origin, etc. from it
 	//  for setting up events on the client
@@ -974,5 +926,4 @@ void DLLEXPORT HUD_PostRunCmd(struct local_state_s* from, struct local_state_s* 
 
 	// All games can use FOV state
 	g_lastFOV = to->client.fov;
-	g_CurrentWeaponId = to->client.m_iId;
 }

@@ -158,19 +158,13 @@ void V_InterpolateAngles( float *start, float *end, float *output, float frac )
 	V_NormalizeAngles( output );
 } */
 
-enum class CalcBobMode
-{
-	VB_COS,
-	VB_SIN,
-	VB_COS2,
-	VB_SIN2
-};
-
 // Quakeworld bob code, this fixes jitters in the mutliplayer since the clock (pparams->time) isn't quite linear
-void V_CalcBob(struct ref_params_s* pparams, float frequencyMultiplier, const CalcBobMode& mode, double& bobtime, float& bob, float& lasttime)
+float V_CalcBob(struct ref_params_s* pparams)
 {
-	
+	static double bobtime = 0;
+	static float bob = 0;
 	float cycle;
+	static float lasttime = 0;
 	Vector vel;
 
 
@@ -178,12 +172,10 @@ void V_CalcBob(struct ref_params_s* pparams, float frequencyMultiplier, const Ca
 		pparams->time == lasttime)
 	{
 		// just use old value
-		return; // bob;
+		return bob;
 	}
 
 	lasttime = pparams->time;
-
-	bobtime += pparams->frametime * frequencyMultiplier;
 
 	//TODO: bobtime will eventually become a value so large that it will no longer behave properly.
 	//Consider resetting the variable if a level change is detected (pparams->time < lasttime might do the trick).
@@ -206,22 +198,11 @@ void V_CalcBob(struct ref_params_s* pparams, float frequencyMultiplier, const Ca
 	vel[2] = 0;
 
 	bob = sqrt(vel[0] * vel[0] + vel[1] * vel[1]) * cl_bob->value;
-
-	if (mode == CalcBobMode::VB_SIN)
-		bob = bob * 0.1 + bob * 0.23 * sin(cycle);
-	else if (mode == CalcBobMode::VB_COS)
-		bob = bob * 0.1 + bob * 0.23 * cos(cycle);
-	else if (mode == CalcBobMode::VB_SIN2)
-		bob = bob * 0.1 + bob * 0.23 * sin(cycle) * sin(cycle);
-	else if (mode == CalcBobMode::VB_COS2)
-		bob = bob * 0.1 + bob * 0.23 * cos(cycle) * cos(cycle);
-
-
+	bob = bob * 0.3 + bob * 0.7 * sin(cycle);
 	bob = V_min(bob, 4);
 	bob = V_max(bob, -7);
-	// return bob;
+	return bob;
 }
-
 
 /*
 ===============
@@ -510,18 +491,11 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 	cl_entity_t *ent, *view;
 	int i;
 	Vector angles;
-	float bobForward;
-	float bobRight;
-	float bobUp;
-	float waterOffset;
+	float bob, waterOffset;
 	static viewinterp_t ViewInterp;
 
 	static float oldz = 0;
 	static float lasttime;
-
-	static double bobTimes[3]{0.0f};
-	static float lastTimes[3]{0.0f};
-
 
 	Vector camAngles, camForward, camRight, camUp;
 	cl_entity_t* pwater;
@@ -543,13 +517,11 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 
 	// transform the view offset by the model's matrix to get the offset from
 	// model origin for the view
-	V_CalcBob(pparams, 0.75f, CalcBobMode::VB_SIN, bobTimes[0], bobRight, lastTimes[0]);
-	V_CalcBob(pparams, 1.50f, CalcBobMode::VB_SIN, bobTimes[1], bobUp, lastTimes[1]);
-	V_CalcBob(pparams, 1.00f, CalcBobMode::VB_SIN, bobTimes[2], bobForward, lastTimes[2]);
+	bob = V_CalcBob(pparams);
 
 	// refresh position
 	VectorCopy(pparams->simorg, pparams->vieworg);
-	pparams->vieworg[2] += bobRight;
+	pparams->vieworg[2] += (bob);
 	VectorAdd(pparams->vieworg, pparams->viewheight, pparams->vieworg);
 
 	VectorCopy(pparams->cl_viewangles, pparams->viewangles);
@@ -677,21 +649,17 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 
 	// Let the viewmodel shake at about 10% of the amplitude
 	gEngfuncs.V_ApplyShake(view->origin, view->angles, 0.9);
+
 	for (i = 0; i < 3; i++)
 	{
-		view->origin[i] += bobRight * 0.33 * pparams->right[i];
-		view->origin[i] += bobUp * 0.17 * pparams->up[i];
-		view->origin[i] += bobForward * 0.4 * pparams->forward[i];
+		view->origin[i] += bob * 0.4 * pparams->forward[i];
 	}
-
-	view->origin.z += bobRight;
+	view->origin[2] += bob;
 
 	// throw in a little tilt.
-	// view->angles[YAW]   -= bobForward * 0.5;
-	// view->angles[ROLL]  -= bobForward * 1.0;
-	// view->angles[PITCH] -= bobForward * 0.3;
-
-	
+	view->angles[YAW] -= bob * 0.5;
+	view->angles[ROLL] -= bob * 1;
+	view->angles[PITCH] -= bob * 0.3;
 
 	if (0 != cl_bobtilt->value)
 	{
